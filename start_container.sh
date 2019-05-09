@@ -19,5 +19,6 @@ nvidia-docker run -it \
     -env="XAUTHORITY=$XAUTH" \
     --volume="$XAUTH:$XAUTH" \
     --runtime=nvidia \
+    --name research_project1819 \
     research_project1819:latest \
     bash

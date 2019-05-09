@@ -7,18 +7,16 @@ RUN set -x \
         && apt-get update \
         && apt-get upgrade -y \
         && apt-get install -y apt-transport-https ca-certificates \
-        && apt-get install -y git vim htop sudo curl wget mesa-utils \
+        && apt-get install -y git vim htop sudo curl wget mesa-utils python-pip \
         && rm -rf /var/lib/apt/lists/*
 
 RUN useradd -ms /bin/bash user \
     && echo "user:user" | chpasswd && adduser user sudo \
     && usermod -aG audio user
 
-COPY ./Cyberbotics.asc /root
-
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-key add /root/Cyberbotics.asc \
+RUN wget -qO - https://www.cyberbotics.com/Cyberbotics.asc | sudo apt-key add - \
         && apt-get update \
         && apt-get install -y software-properties-common \
         && apt-add-repository 'deb http://www.cyberbotics.com/debian/ binary-amd64/' \
